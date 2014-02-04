@@ -1,8 +1,7 @@
 #version 130
 
-in vec4 pass_color;
-out vec4 out_color;
+out vec4 outColor;
 
 void main(){
-  out_color=pass_color;
+    outColor = vec4(1.0, 0.0, 1.0, 1.0);
 }
