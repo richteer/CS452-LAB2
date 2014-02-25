@@ -30,12 +30,13 @@ void show_stuff(void)
 		0.5f,0.0f,0.0f,
 		0.25,-0.5f,0.0f};
 
+
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glDrawArrays(GL_POLYGON, 0, 3*6);
+	glDrawArrays(GL_POLYGON, 0, 3*6 );
 
 
 	glFlush();
@@ -49,24 +50,29 @@ void init(void)
 	char log[1000];
 	int loglen;
 
+	// Initialize the shader program
 	program = glCreateProgram();
-	vs = init_shader("vertexshader.glsl", GL_VERTEX_SHADER);
-	if (vs < 0) exit(NOPE);
+	vs = init_shader("vertexshader.glsl", GL_VERTEX_SHADER); // Prepare the vertex shader
+	if (vs <= 0) exit(NOPE);
 
-	fs = init_shader("fragmentshader.glsl", GL_FRAGMENT_SHADER);
-	if (fs < 0) exit(NOPE);
+	fs = init_shader("fragmentshader.glsl", GL_FRAGMENT_SHADER); // Prepare the fragment shader
+	if (fs <= 0) exit(NOPE);
 
+	// Attach the shaders to the program
 	glAttachShader(program,vs);
 	glAttachShader(program,fs);
 
+	// Prep the program for use
 	glLinkProgram(program);
+	
+	// Error checking
 	glGetProgramInfoLog(program, 1000, &loglen,log);
-
 	if (loglen) {
 		fprintf(stderr,"Link Program Failed: %s\n",log);
-//		exit(NOPE);
+		exit(NOPE);
 	}
-	
+
+	// If we haven't failed yet, use the program in rendering	
 	glUseProgram(program);
 
 }
