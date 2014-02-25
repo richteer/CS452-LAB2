@@ -1,0 +1,17 @@
+Using a shader:
+--------------
+
+The `init_shader.h' file has annotations to the code as to how each step works, but in summary:
+ - Read in the shader file source into memory
+ - Create the shader, and compile the source
+ - Check for errors
+
+Outside of initializing the shaders, they then need to be set up for use:
+ - Initialize a `program'
+ - Initialize the shaders to be used
+ - Attach the compiled shaders to the program
+ - Link the program
+ - Check for errors
+ - Set the program to be used
+
+The way I have my shaders set up, the vertex shader takes in a vec4 containing the location of a point, and passes out a color based on its location. The fragment shader then reads in that color to be used, and uses that color.
